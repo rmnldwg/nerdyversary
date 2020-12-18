@@ -1,8 +1,3 @@
-# anniversary
-Small project about finding "nerdy anniversaries". An obvious example would be that after 3.1415... years one could celebrate the π-th anniversary. The code in this repo finds nice combinations of numbers like π, e and so on and can construct fractions for the approximation.
-
-Here are the meaningfull anniversaries from the 18th of December until one year later.
-
 | Date         | Value [Years] | Difference [Days] |               Display | Rating |
 | :----------- | ------------: | ----------------: | --------------------: | -----: |
 | 18. Dec 2020 |          4.72 |              0.23 | $\frac{9\pi^3}{8e^2}$ |      ⭐ |
