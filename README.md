@@ -5,7 +5,6 @@ Here are the meaningfull anniversaries from the 18th of December until one year 
 
 | Date         | Value [Years] | Difference [Days] |               Display | Rating |
 | :----------- | ------------: | ----------------: | --------------------: | -----: |
-| 18. Dec 2020 |          4.72 |              0.23 | $\frac{9\pi^3}{8e^2}$ |      ⭐ |
 | 31. Dec 2020 |          4.76 |              0.46 |        $\frac{7e}{4}$ |    ⭐⭐⭐ |
 | 14. Jan 2021 |          4.79 |              0.36 |   $\frac{3e^3}{4\pi}$ |     ⭐⭐ |
 | 15. Jan 2021 |          4.80 |              0.64 |   $\frac{3e^3}{4\pi}$ |     ⭐⭐ |
@@ -26,3 +25,13 @@ Here are the meaningfull anniversaries from the 18th of December until one year 
 | 3. Nov 2021  |          5.60 |              0.74 |   $\frac{7e^3}{8\pi}$ |      ⭐ |
 | 12. Dec 2021 |          5.70 |              0.08 |    $\frac{\pi^3}{2e}$ |     ⭐⭐ |
 | 13. Dec 2021 |          5.71 |              0.92 |    $\frac{\pi^3}{2e}$ |     ⭐⭐ |
+| 15. Feb 2022 |          5.88 |              0.37 |   $\frac{5e^2}{2\pi}$ |      ⭐ |
+| 8. May 2022  |          6.11 |              0.10 |  $\frac{3e^3}{\pi^2}$ |      ⭐ |
+| 12. May 2022 |          6.12 |              0.13 |        $\frac{9e}{4}$ |     ⭐⭐ |
+| 30. May 2022 |          6.17 |              1.00 |    $\frac{5\pi^2}{8}$ |      ⭐ |
+| 31. May 2022 |          6.17 |              0.00 |    $\frac{5\pi^2}{8}$ |      ⭐ |
+| 12. Jul 2022 |          6.28 |              0.11 |                $2\pi$ |  ⭐⭐⭐⭐⭐ |
+| 16. Jul 2022 |          6.29 |              0.03 | $\frac{3\pi^3}{2e^2}$ |    ⭐⭐⭐ |
+| 7. Aug 2022  |          6.35 |              0.27 |   $\frac{7\pi^2}{4e}$ |      ⭐ |
+| 21. Aug 2022 |          6.39 |              0.15 |     $\frac{e^3}{\pi}$ |    ⭐⭐⭐ |
+| 22. Aug 2022 |          6.40 |              0.85 |     $\frac{e^3}{\pi}$ |    ⭐⭐⭐ |
