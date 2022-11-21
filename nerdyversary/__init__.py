@@ -1,10 +1,10 @@
 """
-.. include:: README.md
+.. include:: ../README.md
 """
 import datetime as dt
 
 import numpy as np
-from sympy import Expr, NumberSymbol, S
+from sympy import Expr, NumberSymbol, S, latex
 
 TODAY = dt.date.today()
 DAYS_PER_YEAR = 365.2425
@@ -135,3 +135,48 @@ def search(
             duration_in_days += 1
 
     return candidates
+
+
+def format_md_row(
+    date: dt.date,
+    expression: Expr,
+) -> str:
+    """
+    Return a row of a markdown table that contains the `date` and the `expression` of
+    a nerdyversary. The header of that table looks like this:
+
+    ```markdown
+    | Date | Days | Years | Expression |
+    | :--- | ---: | ----: | ---------: |
+    ```
+
+    Example:
+    >>> results = search(
+    ...     special_day="2016-03-30",
+    ...     search_start="2022-07-10",
+    ...     search_end="2022-07-20",
+    ...     factor_lim=5,
+    ...     max_power=3
+    ... )
+    >>> for res in results:
+    ...     print(format_md_row(*res))
+    ...
+    | 12. Jul 2022 | 2295 | 6.28 | $2 \\pi$ |
+    | 16. Jul 2022 | 2299 | 6.29 | $\\frac{3 \\pi^{3}}{2 e^{2}}$ |
+
+    Together with the header row above, this would render into the following nice
+    little table:
+
+    | Date         | Days | Years | Expression                    |
+    | :----------- | ---: | ----: | ----------------------------: |
+    | 12. Jul 2022 | 2295 | 6.28  | $2 \\pi$                      |
+    | 16. Jul 2022 | 2299 | 6.29  | $\\frac{3 \\pi^{3}}{2 e^{2}}$ |
+    """
+    duration_in_years = float(expression.evalf())
+    duration_in_days = round(duration_in_years * DAYS_PER_YEAR)
+    return (
+        f"| {date:%-d. %b %Y} "
+        f"| {duration_in_days:d} "
+        f"| {duration_in_years:.2f} "
+        f"| ${latex(expression)}$ |"
+    )
