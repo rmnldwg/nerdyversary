@@ -102,7 +102,7 @@ def search(
     ...     factor_lim=5,
     ...     max_power=3,
     ... )
-    [(2*pi, 0.0003112738590385078), (3*pi**3*exp(-2)/2, 8.335410484594519e-05)]
+    [(datetime.date(2022, 7, 12), 2*pi), (datetime.date(2022, 7, 16), 3*pi**3*exp(-2)/2)]
     """
     if isinstance(special_day, str):
         special_day = dt.date.fromisoformat(special_day)
@@ -117,21 +117,21 @@ def search(
     elif isinstance(search_end, str):
         search_end = dt.date.fromisoformat(search_end)
 
-    count = 0
     candidates = []
     duration_in_days = (search_start - special_day).days
     max_duration = (search_end - special_day).days
 
-    while duration_in_days + count < max_duration:
+    while duration_in_days < max_duration:
         try:
-            expr, diff = construct(
-                duration_in_years=(duration_in_days + count) / DAYS_PER_YEAR,
+            expr, _ = construct(
+                duration_in_years=(duration_in_days) / DAYS_PER_YEAR,
                 **construct_kwargs
             )
-            candidates.append((expr, diff))
+            date = special_day + dt.timedelta(days=duration_in_days)
+            candidates.append((date, expr))
         except NoNerdyversaryError:
             pass
         finally:
-            count += 1
+            duration_in_days += 1
 
     return candidates
