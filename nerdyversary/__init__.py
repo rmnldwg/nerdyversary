@@ -11,70 +11,6 @@ DAYS_PER_YEAR = 365.2425
 SYMBOLS_LIST = [S.Pi, S.Exp1, S.GoldenRatio]
 
 
-class NoNerdyversaryError(Exception):
-    """
-    Exception that gets raised when no suitable nerdyversary can be constructed for a
-    given duration.
-    """
-
-
-def construct(
-    duration_in_years: float,
-    symbols: list[NumberSymbol] | None = None,
-    max_power: int = 5,
-    tolerance: float = 0.5,
-    factor_lim: int = 10,
-):
-    """
-    For a given `duration_in_years`, find nice and nerdy approximations using the list
-    of defined `symbols`. The `max_power` is the largest exponent that is considered
-    for the `symbols`, while `factor_lim` ensures that the factors in the enumerator
-    and denominator don't get too large. An approximation is considred good enough,
-    when it is withing the `tolerance`, which must be given in days.
-
-    Raises a `NoNerdyversaryError` if nothing is found with the given parameters.
-
-    Example:
-    >>> duration_in_years = 2 * 3.1416 / 2.7183
-    >>> construct(duration_in_years)
-    (2*pi*exp(-1), 1.0046673776020754e-05)
-    """
-    if symbols is None:
-        symbols = SYMBOLS_LIST.copy()
-
-    for enum_pow in range(max_power + 1):
-        for denom_pow in range(max_power + 1):
-            # exponents of enum & denom 0 means approximation is fraction
-            if enum_pow == denom_pow == 0:
-                continue
-
-            for enum_sym in symbols:
-                for denom_sym in symbols:
-                    # don't consider same symbol in enumerator and denominator
-                    if enum_sym == denom_sym:
-                        continue
-
-                    enum_expr = enum_sym ** enum_pow
-                    denom_expr = denom_sym ** denom_pow
-
-                    ratio = float((duration_in_years * denom_expr / enum_expr).evalf())
-                    enum_fac, denom_fac = round(ratio, 2).as_integer_ratio()
-
-                    if enum_fac > factor_lim or denom_fac > factor_lim:
-                        continue
-
-                    expression = (enum_fac * enum_expr) / (denom_fac * denom_expr)
-                    approx = float(expression.evalf())
-                    difference = np.abs(duration_in_years - approx)
-
-                    if difference * DAYS_PER_YEAR < tolerance:
-                        return expression, difference
-
-    raise NoNerdyversaryError(
-        "No nerdyversary found for the provided duration, tolerance and limitations."
-    )
-
-
 def search(
     special_day: str | dt.date,
     search_start: str | dt.date | None = None,
@@ -137,6 +73,63 @@ def search(
     return candidates
 
 
+def construct(
+    duration_in_years: float,
+    symbols: list[NumberSymbol] | None = None,
+    max_power: int = 5,
+    tolerance: float = 0.5,
+    factor_lim: int = 10,
+):
+    """
+    For a given `duration_in_years`, find nice and nerdy approximations using the list
+    of defined `symbols`. The `max_power` is the largest exponent that is considered
+    for the `symbols`, while `factor_lim` ensures that the factors in the enumerator
+    and denominator don't get too large. An approximation is considred good enough,
+    when it is withing the `tolerance`, which must be given in days.
+
+    Raises a `NoNerdyversaryError` if nothing is found with the given parameters.
+
+    Example:
+    >>> duration_in_years = 2 * 3.1416 / 2.7183
+    >>> construct(duration_in_years)
+    (2*pi*exp(-1), 1.0046673776020754e-05)
+    """
+    if symbols is None:
+        symbols = SYMBOLS_LIST.copy()
+
+    for enum_pow in range(max_power + 1):
+        for denom_pow in range(max_power + 1):
+            # exponents of enum & denom 0 means approximation is fraction
+            if enum_pow == denom_pow == 0:
+                continue
+
+            for enum_sym in symbols:
+                for denom_sym in symbols:
+                    # don't consider same symbol in enumerator and denominator
+                    if enum_sym == denom_sym:
+                        continue
+
+                    enum_expr = enum_sym ** enum_pow
+                    denom_expr = denom_sym ** denom_pow
+
+                    ratio = float((duration_in_years * denom_expr / enum_expr).evalf())
+                    enum_fac, denom_fac = round(ratio, 2).as_integer_ratio()
+
+                    if enum_fac > factor_lim or denom_fac > factor_lim:
+                        continue
+
+                    expression = (enum_fac * enum_expr) / (denom_fac * denom_expr)
+                    approx = float(expression.evalf())
+                    difference = np.abs(duration_in_years - approx)
+
+                    if difference * DAYS_PER_YEAR < tolerance:
+                        return expression, difference
+
+    raise NoNerdyversaryError(
+        "No nerdyversary found for the provided duration, tolerance and limitations."
+    )
+
+
 def format_md_row(
     date: dt.date,
     expression: Expr,
@@ -180,3 +173,10 @@ def format_md_row(
         f"| {duration_in_years:.2f} "
         f"| ${latex(expression)}$ |"
     )
+
+
+class NoNerdyversaryError(Exception):
+    """
+    Exception that gets raised when no suitable nerdyversary can be constructed for a
+    given duration.
+    """
