@@ -14,7 +14,7 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.10"
-keywords = ["maths", "anniversary", "nerdy"]
+keywords = ["maths", "anniversary", "nerdy", "irrational-numbers"]
 license = {text = "MIT"}
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -28,6 +28,7 @@ dynamic = ["version"]
 
 [project.urls]
 source = "https://github.com/rmnldwg/anniversary"
+docs = "https://rmnldwg.github.io/nerdyversary"
 
 [project.optional-dependencies]
 dev = [
