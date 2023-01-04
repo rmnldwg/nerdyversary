@@ -1,37 +1,105 @@
-# anniversary
-Small project about finding "nerdy anniversaries". An obvious example would be that after 3.1415... years one could celebrate the π-th anniversary. The code in this repo finds nice combinations of numbers like π, e and so on and can construct fractions for the approximation.
+![Two Pi Pies](https://github.com/rmnldwg/nerdyversary/blob/main/two_pi_pies.jpg)
 
-Here are the meaningfull anniversaries from the 18th of December until one year later.
+# Nerdyversary
 
-| Date         | Value [Years] | Difference [Days] |               Display | Rating |
-| :----------- | ------------: | ----------------: | --------------------: | -----: |
-| 31. Dec 2020 |          4.76 |              0.46 |        $\frac{7e}{4}$ |    ⭐⭐⭐ |
-| 14. Jan 2021 |          4.79 |              0.36 |   $\frac{3e^3}{4\pi}$ |     ⭐⭐ |
-| 15. Jan 2021 |          4.80 |              0.64 |   $\frac{3e^3}{4\pi}$ |     ⭐⭐ |
-| 6. Mar 2021  |          4.93 |              0.40 |     $\frac{\pi^2}{2}$ |  ⭐⭐⭐⭐⭐ |
-| 7. Mar 2021  |          4.94 |              0.60 |     $\frac{\pi^2}{2}$ |  ⭐⭐⭐⭐⭐ |
-| 7. Apr 2021  |          5.02 |              0.02 |       $\frac{e^3}{4}$ |    ⭐⭐⭐ |
-| 8. Apr 2021  |          5.02 |              0.98 |       $\frac{e^3}{4}$ |    ⭐⭐⭐ |
-| 1. May 2021  |          5.09 |              0.25 | $\frac{5e^3}{2\pi^2}$ |      ⭐ |
-| 26. Jun 2021 |          5.24 |              0.12 |  $\frac{7e^2}{\pi^2}$ |     ⭐⭐ |
-| 28. Jun 2021 |          5.25 |              0.19 | $\frac{5\pi^3}{4e^2}$ |      ⭐ |
-| 15. Jul 2021 |          5.29 |              0.13 |   $\frac{9e^2}{4\pi}$ |     ⭐⭐ |
-| 6. Sep 2021  |          5.44 |              0.34 |                  $2e$ |  ⭐⭐⭐⭐⭐ |
-| 9. Sep 2021  |          5.45 |              0.20 |   $\frac{3\pi^2}{2e}$ |      ⭐ |
-| 28. Sep 2021 |          5.50 |              0.03 |      $\frac{7\pi}{4}$ |    ⭐⭐⭐ |
-| 14. Oct 2021 |          5.54 |              0.10 |      $\frac{3e^2}{4}$ |      ⭐ |
-| 15. Oct 2021 |          5.54 |              0.90 |      $\frac{3e^2}{4}$ |      ⭐ |
-| 2. Nov 2021  |          5.59 |              0.26 |   $\frac{7e^3}{8\pi}$ |      ⭐ |
-| 3. Nov 2021  |          5.60 |              0.74 |   $\frac{7e^3}{8\pi}$ |      ⭐ |
-| 12. Dec 2021 |          5.70 |              0.08 |    $\frac{\pi^3}{2e}$ |     ⭐⭐ |
-| 13. Dec 2021 |          5.71 |              0.92 |    $\frac{\pi^3}{2e}$ |     ⭐⭐ |
-| 15. Feb 2022 |          5.88 |              0.37 |   $\frac{5e^2}{2\pi}$ |      ⭐ |
-| 8. May 2022  |          6.11 |              0.10 |  $\frac{3e^3}{\pi^2}$ |      ⭐ |
-| 12. May 2022 |          6.12 |              0.13 |        $\frac{9e}{4}$ |     ⭐⭐ |
-| 30. May 2022 |          6.17 |              1.00 |    $\frac{5\pi^2}{8}$ |      ⭐ |
-| 31. May 2022 |          6.17 |              0.00 |    $\frac{5\pi^2}{8}$ |      ⭐ |
-| 12. Jul 2022 |          6.28 |              0.11 |                $2\pi$ |  ⭐⭐⭐⭐⭐ |
-| 16. Jul 2022 |          6.29 |              0.03 | $\frac{3\pi^3}{2e^2}$ |    ⭐⭐⭐ |
-| 7. Aug 2022  |          6.35 |              0.27 |   $\frac{7\pi^2}{4e}$ |      ⭐ |
-| 21. Aug 2022 |          6.39 |              0.15 |     $\frac{e^3}{\pi}$ |    ⭐⭐⭐ |
-| 22. Aug 2022 |          6.40 |              0.85 |     $\frac{e^3}{\pi}$ |    ⭐⭐⭐ |
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/rmnldwg/nerdyversary/blob/main/LICENSE)
+[![GitHub repo](https://img.shields.io/badge/rmnldwg%2Fnerdyversary-grey.svg?style=flat&logo=github)](https://github.com/rmnldwg/nerdyversary)
+[![build badge](https://github.com/rmnldwg/nerdyversary/actions/workflows/build.yml/badge.svg?style=flat)](https://pypi.org/project/nerdyversary/)
+[![docs badge](https://github.com/rmnldwg/nerdyversary/actions/workflows/docs.yml/badge.svg?style=flat)](https://rmnldwg.github.io/nerdyversary/)
+[![tests badge](https://github.com/rmnldwg/nerdyversary/actions/workflows/tests.yml/badge.svg?style=flat)](https://rmnldwg.github.io/nerdyversary/)
+
+Small project about finding "nerdy anniversaries". An obvious example would be that after 3.1415... years one could celebrate the $\pi$-th anniversary. The code in this repo finds nice combinations of numbers like $\pi$, $e$, $\phi$ and so on and can construct fractions for the approximation.
+
+
+## Installation
+
+### From PyPI
+
+> ⚠️ **Note:**
+> This project is currently not yet on PyPI.
+
+
+### From Source
+
+1. Clone the repository
+   ```
+   $ git clone https://github.com/rmnldwg/nerdyversary
+   ```
+
+1. Create a Virtual Environment (optional, but recommended)
+   ```
+   $ python3 -m venv .venv
+   ```
+   You should do this with an installation of Python 3.10 or later. And don't forget to activate the environment with
+   ```
+   $ source .venv/bin/activate
+   ```
+
+1. Use `pip` to install
+   ```
+   $ pip install -U pip setuptools setuptools-scm
+   $ pip install .
+   ```
+
+
+## Usage
+
+### Script
+
+```
+usage: nerdyversary [-h] [-v] [-d SPECIAL_DAY] [-s START] [-e END]
+                    [--max-power MAX_POWER] [--factor-lim FACTOR_LIM]
+                    [--format FORMAT]
+
+Find beautiful nerdyversaries.
+
+options:
+  -h, --help            show this help message and exit
+  -v, --version         Show the installed version and exit.
+  -d SPECIAL_DAY, --special-day SPECIAL_DAY
+                        Date of the special day in ISO format. (default: 2023-01-04)
+  -s START, --start START
+                        Date when to start with search in ISO format. (default:
+                        2023-01-04)
+  -e END, --end END     Date when to end the search in ISO format. (default:
+                        2024-01-04)
+  --max-power MAX_POWER
+                        Largest exponent to consider for building the nerdyversaries.
+                        (default: 5)
+  --factor-lim FACTOR_LIM
+                        Largest multiple of a symbol that is accepted. (default: 10)
+  --format FORMAT       The output format that will be used by the `tabulate` package.
+                        (default: simple)
+```
+
+The `FORMAT` argument must be one of the strings the [tabulate](https://github.com/astanin/python-tabulate#table-format) package understands.
+
+An example: The input
+```
+$ nerdyversary -d 2012-12-21 -s 2023-01-01 -e 2024-01-01 --format pipe --factor-lim 4 --max-power 3
+```
+will yield the following table:
+
+| Date         |   Days |   Years | Expression                     |
+|:-------------|-------:|--------:|:-------------------------------|
+| 6. Jan 2023  |   3668 |   10.04 | $\frac{e^{3}}{2}$              |
+| 24. Feb 2023 |   3717 |   10.18 | $\frac{5 e^{3}}{\pi^{2}}$      |
+| 12. Jun 2023 |   3825 |   10.47 | $4 \phi^{2}$                   |
+| 19. Jun 2023 |   3832 |   10.49 | $\frac{5 \pi^{3}}{2 e^{2}}$    |
+| 25. Jul 2023 |   3868 |   10.59 | $\frac{5 \phi^{3}}{2}$         |
+| 5. Nov 2023  |   3971 |   10.87 | $4 e$                          |
+| 12. Nov 2023 |   3978 |   10.89 | $\frac{3 \pi^{2}}{e}$          |
+| 14. Dec 2023 |   4010 |   10.98 | $\frac{3 \pi^{3}}{2 \phi^{3}}$ |
+
+The symbols here are
+
+* the golden ratio $\phi \approx 1.618\ldots$
+* the number $\pi \approx 3.1415\ldots$
+* Euler's number $e \approx 2.718\ldots$
+
+When using this package as a library, arbitrary constants may be defined as symbols.
+
+
+### Library API
+
+The API documentation is hosted [here](https://rmnldwg.github.io/nerdyversary).
