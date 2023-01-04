@@ -22,6 +22,7 @@ classifiers = [
 dependencies = [
     "numpy",
     "sympy",
+    "tabulate",
 ]
 dynamic = ["version"]
 
