@@ -8,6 +8,8 @@ import numpy as np
 from sympy import Expr, NumberSymbol, S, latex
 from tabulate import tabulate
 
+from ._version import version
+
 TODAY = dt.date.today()
 DAYS_PER_YEAR = 365.2425
 SYMBOLS_LIST = [S.Pi, S.Exp1, S.GoldenRatio]
@@ -129,7 +131,19 @@ def get_fields(date: dt.date, expression: Expr) -> dict[str, str]:
     LaTeX formula.
 
     Example:
-    >>> get_fields()
+    >>> candidates = search(
+    ...     special_day="2016-03-30",
+    ...     search_start="2022-07-10",
+    ...     search_end="2022-07-20",
+    ...     factor_lim=5,
+    ...     max_power=3,
+    ... )
+    >>> get_fields(*candidates[0])
+    {'Date': '12. Jul 2022', 'Days': '2295', 'Years': '6.28', 'Expression': '$2 \\pi$'}
+
+    A list of dictionaries like these for each candidate can then be used to display
+    a pretty table using the [tabulate](https://github.com/astanin/python-tabulate)
+    package.
     """
     duration_in_years = float(expression.evalf())
     duration_in_days = round(duration_in_years * DAYS_PER_YEAR)
@@ -147,6 +161,10 @@ def main():
         prog="nerdyversary",
         description=main.__doc__,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "-v", "--version", action="version", version=f"nerdyversary {version}",
+        help="Show the installed version and exit."
     )
     parser.add_argument(
         "-d", "--special-day", type=dt.date.fromisoformat, default=dt.date.today(),
