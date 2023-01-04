@@ -15,11 +15,16 @@ Small project about finding "nerdy anniversaries". An obvious example would be t
 
 ### From PyPI
 
-> ⚠️ **Note:**
-> This project is currently not yet on PyPI.
+Simply use
+```
+$ pip install nerdyversary
+```
+to install this package in your environment.
 
 
 ### From Source
+
+To install `nerdyversary` from source, follow these steps below:
 
 1. Clone the repository
    ```
@@ -78,7 +83,7 @@ An example: The input
 ```
 $ nerdyversary -d 2012-12-21 -s 2023-01-01 -e 2024-01-01 --format pipe --factor-lim 4 --max-power 3
 ```
-will yield the following table:
+will yield a markdown table that renders into the following:
 
 | Date         |   Days |   Years | Expression                     |
 |:-------------|-------:|--------:|:-------------------------------|
