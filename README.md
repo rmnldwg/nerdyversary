@@ -1,4 +1,4 @@
-![Two Pi Pies](two_pi_pies.jpg)
+![Two Pi Pies](https://github.com/rmnldwg/nerdyversary/blob/main/two_pi_pies.jpg)
 
 # Nerdyversary
 
