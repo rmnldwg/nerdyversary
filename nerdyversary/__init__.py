@@ -89,8 +89,8 @@ def construct(
 
     Example:
     >>> duration_in_years = 2 * 3.1416 / 2.7183
-    >>> construct(duration_in_years)
-    2*pi*exp(-1)
+    >>> [res for res in construct(duration_in_years)]
+    [2*pi*exp(-1)]
     """
     if symbols is None:
         symbols = SYMBOLS_LIST.copy()
@@ -139,7 +139,7 @@ def get_fields(date: dt.date, expression: Expr) -> dict[str, str]:
     ...     max_power=3,
     ... )
     >>> get_fields(*candidates[0])
-    {'Date': '12. Jul 2022', 'Days': '2295', 'Years': '6.28', 'Expression': '$2 \\pi$'}
+    {'Date': '12. Jul 2022', 'Days': '2295', 'Years': '6.28', 'Expression': '$2 \\\\pi$'}
 
     A list of dictionaries like these for each candidate can then be used to display
     a pretty table using the [tabulate](https://github.com/astanin/python-tabulate)
