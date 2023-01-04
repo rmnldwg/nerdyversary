@@ -44,7 +44,7 @@ tests = [
 ]
 
 [project.scripts]
-lyscripts = "nerdyversary:main"
+nerdyversary = "nerdyversary:main"
 
 [tool.setuptools_scm]
 write_to = "nerdyversary/_version.py"
