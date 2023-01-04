@@ -1,10 +1,12 @@
 """
 .. include:: ../README.md
 """
+import argparse
 import datetime as dt
 
 import numpy as np
 from sympy import Expr, NumberSymbol, S, latex
+from tabulate import tabulate
 
 TODAY = dt.date.today()
 DAYS_PER_YEAR = 365.2425
@@ -16,7 +18,7 @@ def search(
     search_start: str | dt.date | None = None,
     search_end: str | dt.date | None = None,
     **construct_kwargs,
-) -> list[tuple[Expr, float]]:
+) -> set[tuple[Expr, float]]:
     """
     For every day between the date `search_start` and `search_end`, check if the time
     since the `special_day` can be written as a nerdyversary. If `search_start` is not
@@ -53,24 +55,20 @@ def search(
     elif isinstance(search_end, str):
         search_end = dt.date.fromisoformat(search_end)
 
-    candidates = []
-    duration_in_days = (search_start - special_day).days
+    candidates = {}
+    min_duration = (search_start - special_day).days
     max_duration = (search_end - special_day).days
 
-    while duration_in_days < max_duration:
-        try:
-            expr, _ = construct(
-                duration_in_years=(duration_in_days) / DAYS_PER_YEAR,
-                **construct_kwargs
-            )
-            date = special_day + dt.timedelta(days=duration_in_days)
-            candidates.append((date, expr))
-        except NoNerdyversaryError:
-            pass
-        finally:
-            duration_in_days += 1
+    for duration_in_days in range(min_duration, max_duration):
+        expressions = construct(
+            duration_in_years=(duration_in_days / DAYS_PER_YEAR),
+            **construct_kwargs
+        )
+        date = special_day + dt.timedelta(days=duration_in_days)
+        new_candidates = {(date, expr) for expr in expressions}
+        candidates = {*candidates, *new_candidates}
 
-    return candidates
+    return sorted(candidates)
 
 
 def construct(
@@ -87,12 +85,10 @@ def construct(
     and denominator don't get too large. An approximation is considred good enough,
     when it is withing the `tolerance`, which must be given in days.
 
-    Raises a `NoNerdyversaryError` if nothing is found with the given parameters.
-
     Example:
     >>> duration_in_years = 2 * 3.1416 / 2.7183
     >>> construct(duration_in_years)
-    (2*pi*exp(-1), 1.0046673776020754e-05)
+    2*pi*exp(-1)
     """
     if symbols is None:
         symbols = SYMBOLS_LIST.copy()
@@ -123,60 +119,69 @@ def construct(
                     difference = np.abs(duration_in_years - approx)
 
                     if difference * DAYS_PER_YEAR < tolerance:
-                        return expression, difference
-
-    raise NoNerdyversaryError(
-        "No nerdyversary found for the provided duration, tolerance and limitations."
-    )
+                        yield expression
 
 
-def format_md_row(
-    date: dt.date,
-    expression: Expr,
-) -> str:
+def get_fields(date: dt.date, expression: Expr) -> dict[str, str]:
     """
-    Return a row of a markdown table that contains the `date` and the `expression` of
-    a nerdyversary. The header of that table looks like this:
-
-    ```markdown
-    | Date | Days | Years | Expression |
-    | :--- | ---: | ----: | ---------: |
-    ```
+    Compile a `date`, and the corresponding nerdyversary `expression` into a dictionary
+    that contains the fields `"Date"`, `"Days"`, `"Years"`, and `"Expression"` as a
+    LaTeX formula.
 
     Example:
-    >>> results = search(
-    ...     special_day="2016-03-30",
-    ...     search_start="2022-07-10",
-    ...     search_end="2022-07-20",
-    ...     factor_lim=5,
-    ...     max_power=3
-    ... )
-    >>> for res in results:
-    ...     print(format_md_row(*res))
-    ...
-    | 12. Jul 2022 | 2295 | 6.28 | $2 \\pi$ |
-    | 16. Jul 2022 | 2299 | 6.29 | $\\frac{3 \\pi^{3}}{2 e^{2}}$ |
-
-    Together with the header row above, this would render into the following nice
-    little table:
-
-    | Date         | Days | Years | Expression                    |
-    | :----------- | ---: | ----: | ----------------------------: |
-    | 12. Jul 2022 | 2295 | 6.28  | $2 \\pi$                      |
-    | 16. Jul 2022 | 2299 | 6.29  | $\\frac{3 \\pi^{3}}{2 e^{2}}$ |
+    >>> get_fields()
     """
     duration_in_years = float(expression.evalf())
     duration_in_days = round(duration_in_years * DAYS_PER_YEAR)
-    return (
-        f"| {date:%-d. %b %Y} "
-        f"| {duration_in_days:d} "
-        f"| {duration_in_years:.2f} "
-        f"| ${latex(expression)}$ |"
+    return {
+        "Date"      : f"{date:%-d. %b %Y}",
+        "Days"      : f"{duration_in_days:d}",
+        "Years"     : f"{duration_in_years:.2f}",
+        "Expression": f"${latex(expression)}$",
+    }
+
+
+def main():
+    """Find beautiful nerdyversaries."""
+    parser = argparse.ArgumentParser(
+        prog="nerdyversary",
+        description=main.__doc__,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser.add_argument(
+        "-d", "--special-day", type=dt.date.fromisoformat, default=dt.date.today(),
+        help="Date of the special day in ISO format.",
+    )
+    parser.add_argument(
+        "-s", "--start", type=dt.date.fromisoformat, default=dt.date.today(),
+        help="Date when to start with search in ISO format."
+    )
+    parser.add_argument(
+        "-e", "--end", type=dt.date.fromisoformat,
+        default=dt.date.today() + dt.timedelta(days=DAYS_PER_YEAR),
+        help="Date when to end the search in ISO format."
+    )
+    parser.add_argument(
+        "--max-power", type=int, default=5,
+        help="Largest exponent to consider for building the nerdyversaries."
+    )
+    parser.add_argument(
+        "--factor-lim", type=int, default=10,
+        help="Largest multiple of a symbol that is accepted."
+    )
+    parser.add_argument(
+        "--format", type=str, default="simple",
+        help="The output format that will be used by the `tabulate` package."
+    )
+    args = parser.parse_args()
 
+    candidates = search(
+        special_day=args.special_day,
+        search_start=args.start,
+        search_end=args.end,
+        max_power=args.max_power,
+        factor_lim=args.factor_lim,
+    )
+    table = [get_fields(*candidate) for candidate in candidates]
 
-class NoNerdyversaryError(Exception):
-    """
-    Exception that gets raised when no suitable nerdyversary can be constructed for a
-    given duration.
-    """
+    print(tabulate(table, headers="keys", tablefmt=args.format))
